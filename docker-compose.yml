@@ -1,0 +1,20 @@
+# No local PostgreSQL service - use a Render-hosted PostgreSQL instance.
+# Provide DATABASE_URL via environment or .env (see .env.example).
+services:
+  api:
+    build: .
+    environment:
+      APP_NAME: ${APP_NAME:-repo-ci-debugger}
+      ENVIRONMENT: ${ENVIRONMENT:-production}
+      LOG_LEVEL: ${LOG_LEVEL:-INFO}
+      DATABASE_URL: ${DATABASE_URL:?Set DATABASE_URL to the Render PostgreSQL connection string}
+      DATABASE_SSL: ${DATABASE_SSL:-false}
+      DATABASE_ECHO: ${DATABASE_ECHO:-false}
+      DATABASE_POOL_SIZE: ${DATABASE_POOL_SIZE:-5}
+      DATABASE_MAX_OVERFLOW: ${DATABASE_MAX_OVERFLOW:-10}
+      DATABASE_POOL_TIMEOUT: ${DATABASE_POOL_TIMEOUT:-30}
+      CORS_ORIGINS: ${CORS_ORIGINS:-*}
+      CORS_ALLOW_CREDENTIALS: ${CORS_ALLOW_CREDENTIALS:-false}
+      PORT: ${PORT:-10000}
+    ports:
+      - "8000:10000"
